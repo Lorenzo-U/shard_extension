@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHARD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /*Variabili base*/
+        :root {
+            --bg-color: #0d0d0d;
+            --bg-image: none;
+            --win-bg: rgba(21, 21, 21, 0.85);
+            --win-border: #333;
+            --win-radius: 12px;
+            --win-blur: 15px;
+            --title-bg: #1a1a1a;
+            --title-color: #888;
+            --text-color: #e0e0e0;
+            --accent-color: #00f3ff;
+            --shadow-intensity: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0; height: 100vh; overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        #desktop { position: relative; width: 100vw; height: 100vh; }
+
+        /* widget/shard*/
+        .window {
+            position: absolute;
+            background: var(--win-bg);
+            border: 1px solid var(--win-border);
+            border-radius: var(--win-radius);
+            backdrop-filter: blur(var(--win-blur));
+            -webkit-backdrop-filter: blur(var(--win-blur));
+            box-shadow: var(--shadow-intensity);
+            display: flex; flex-direction: column; overflow: hidden;
+            transition: box-shadow 0.2s, border-color 0.2s, background 0.3s, color 0.3s;
+        }
+        
+        .title-bar {
+            height: 24px; background: var(--title-bg);
+            border-bottom: 1px solid var(--win-border);
+            cursor: default; 
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 8px; user-select: none; flex-shrink: 0; 
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .title-text { font-size: 10px; color: var(--title-color); font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        
+        body.clean-view:not(.edit-mode) .title-bar { display: none; }
+        
+        .content-area { flex-grow: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--text-color); }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /*Modaltà modifica*/
+        .close-btn, .resize-handle, #add-btn { display: none !important; }
+        body.edit-mode .close-btn { display: block !important; }
+        body.edit-mode .resize-handle { display: block !important; }
+        body.edit-mode #add-btn { display: flex !important; }
+        body.edit-mode .title-bar { cursor: grab; background: rgba(0, 243, 255, 0.15); display: flex !important; }
+        body.edit-mode .title-bar:active { cursor: grabbing; }
+        body.edit-mode .window { border: 1px dashed var(--accent-color); }
+
+        .close-btn { width: 10px; height: 10px; border-radius: 50%; background: #ff4444; border: none; cursor: pointer; }
+        .resize-handle { position: absolute; bottom: 0; right: 0; width: 15px; height: 15px; cursor: nwse-resize; background: linear-gradient(135deg, transparent 50%, var(--accent-color) 50%); opacity: 0.8; }
+
+        /*Tema Trasparente (REGOLE CSS SPECIALI)*/
+        body.theme-transparent .window {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        body.theme-transparent .title-bar {
+            background: transparent !important;
+            border: none !important;
+        }
+        /* Mostra bordi  in modifica */
+        body.theme-transparent.edit-mode .window {
+            border: 1px dashed var(--accent-color) !important;
+            background: rgba(0, 243, 255, 0.05) !important;
+        }
+        body.theme-transparent.edit-mode .title-bar {
+            background: rgba(0, 243, 255, 0.15) !important;
+        }
+
+        /*Stile widget*/
+        .widget-content { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box; text-align: center; }
+        
+        .clock-digital { font-size: 3em; font-weight: 800; letter-spacing: -1px; color: var(--text-color); font-family: 'Segoe UI', sans-serif; line-height: 1; }
+        .clock-matrix { font-family: 'Courier New', monospace; color: #0f0; text-shadow: 0 0 5px #0f0; font-weight: bold; font-size: 1.8em; letter-spacing: -1px; }
+        .timezone-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); margin-top: 5px; }
+
+        .analog-face { width: 120px; height: 120px; border: 4px solid var(--accent-color); border-radius: 50%; position: relative; background: rgba(0,0,0,0.1); }
+        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: var(--text-color); border-radius: 2px; }
+        .hand.hour { width: 4px; height: 35px; background: var(--text-color); }
+        .hand.min { width: 3px; height: 45px; background: var(--title-color); }
+        .hand.sec { width: 1px; height: 50px; background: var(--accent-color); }
+        
+        .data-value { font-size: 2.5em; font-weight: 700; color: var(--text-color); }
+        .data-label { font-size: 0.8em; text-transform: uppercase; color: var(--title-color); margin-top: 5px; font-weight: 600; }
+        .icon-large { font-size: 2.5em; margin-bottom: 5px; color: var(--accent-color); }
+        
+        .battery-container { width: 80%; height: 20px; border: 2px solid var(--win-border); border-radius: 4px; padding: 2px; position: relative; margin-top:10px; }
+        .battery-level { height: 100%; background: var(--accent-color); width: 50%; transition: width 0.5s; border-radius: 1px; }
+        .battery-circle { width: 80px; height: 80px; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; }
+        .battery-circle svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+        .battery-circle circle { fill: none; stroke-width: 6; stroke: var(--accent-color); stroke-dasharray: 251; stroke-dashoffset: 251; transition: stroke-dashoffset 0.5s; stroke-linecap: round; }
+
+        .search-widget-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .search-classic img { height: 30px; margin-bottom: 10px; }
+        .search-classic input { background: rgba(128,128,128,0.1); border: 1px solid var(--win-border); color: var(--text-color); padding: 8px 15px; border-radius: 20px; width: 80%; outline: none; text-align: center; font-weight: bold; transition: 0.2s; }
+        .search-classic input:focus { background: rgba(128,128,128,0.2); border-color: var(--accent-color); width: 90%; }
+        .search-minimal input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); padding: 10px; width: 90%; outline: none; text-align: center; font-size: 1.2em; }
+        .search-minimal input::placeholder { color: var(--title-color); }
+        .search-glass { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(128,128,128,0.05); }
+        .search-glass input { background: transparent; border: 1px solid var(--win-border); padding: 12px; width: 85%; border-radius: 8px; color: var(--text-color); outline: none; text-align: left; }
+        .search-glass input:focus { border-color: var(--accent-color); background: rgba(128,128,128,0.1); }
+
+        /*UI buttons*/
+        .fab { position: fixed; border-radius: 50%; border: none; cursor: pointer; z-index: 9000; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+        .fab:hover { transform: scale(1.1); }
+        #add-btn { bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent-color); color: #000; font-size: 30px; box-shadow: 0 0 25px var(--accent-color); }
+        
+        .top-controls { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 9000; }
+        .control-btn { width: 40px; height: 40px; background: rgba(0,0,0,0.4); color: #fff; font-size: 18px; backdrop-filter: blur(5px); border: 1px solid #444; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .control-btn:hover { background: rgba(0,0,0,0.8); }
+        .control-btn.active { background: var(--accent-color); color: #000; box-shadow: 0 0 15px var(--accent-color); border-color: var(--accent-color); }
+
+        /*Settings*/
+        #settings-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--win-bg);
+            z-index: 10000; color: var(--text-color); flex-direction: row; 
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            transition: background 0.3s, color 0.3s;
+        }
+        .settings-sidebar { 
+            width: 250px; background: rgba(128,128,128,0.05);
+            border-right: 1px solid var(--win-border); padding: 40px 20px; display: flex; flex-direction: column; gap: 10px; 
+            transition: border-color 0.3s;
+        }
+        .settings-content { flex-grow: 1; padding: 60px; overflow-y: auto; }
+        
+        .settings-section { display: none; max-width: 700px; animation: fadeIn 0.3s; }
+        .settings-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+        /*Titoli in Grassetto*/
+        .settings-section h1 { margin-top: 0; margin-bottom: 30px; color: var(--text-color); font-size: 2.5em; font-weight: bold; }
+        .settings-subheader { margin-top: 40px; margin-bottom: 20px; color: var(--accent-color); font-size: 0.9em; font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid var(--win-border); padding-bottom: 10px; }
+        
+        .close-settings-fab { position: absolute; top: 20px; right: 20px; background: transparent; color: var(--text-color); font-size: 28px; border: none; cursor: pointer; transition: 0.2s; }
+        .close-settings-fab:hover { color: var(--accent-color); transform: scale(1.2); }
+        
+        .control-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--win-border); }
+        .control-row:last-child { border-bottom: none; }
+        .control-row span { font-size: 1.1em; font-weight: 500; }
+        
+        /*Input*/
+        select, input[type="text"], input[type="number"], input[type="color"] { 
+            background: rgba(128,128,128,0.1); border: 1px solid var(--win-border); color: var(--text-color); 
+            padding: 10px; border-radius: 6px; outline: none; transition: 0.2s; font-family: inherit; font-size: 1em;
+        }
+        select:focus, input[type="text"]:focus, input[type="number"]:focus { border-color: var(--accent-color); background: rgba(128,128,128,0.2); }
+        select option { background: var(--bg-color); color: var(--text-color); }
+        
+        .tab-btn { background: transparent; border: none; color: var(--text-color); opacity: 0.6; text-align: left; padding: 15px; font-size: 1.1em; cursor: pointer; border-radius: 8px; transition: 0.2s; font-weight: 500; }
+        .tab-btn:hover { opacity: 1; background: rgba(128,128,128,0.1); }
+        .tab-btn.active { background: var(--accent-color); color: #000; font-weight: bold; opacity: 1; }
+        
+        .action-btn { padding: 12px 25px; border: 1px solid var(--accent-color); background: rgba(0, 243, 255, 0.1); color: var(--accent-color); cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9em;}
+        .action-btn:hover { background: var(--accent-color); color: #000; }
+        .danger-btn { border-color: #ff4444; color: #ff4444; background: rgba(255,0,0,0.05); }
+        .danger-btn:hover { background: #ff4444; color: white; }
+
+        /* Add modal */
+        #add-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:10000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
+        .add-card { width: 450px; background: #151515; border: 1px solid #333; border-radius: 12px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); color: #e0e0e0;}
+        .add-options { display: flex; gap: 10px; margin-bottom: 25px; }
+        .add-opt-btn { flex: 1; padding: 12px; background: #222; border: 1px solid #333; color: #888; cursor: pointer; border-radius: 6px; transition: 0.2s; }
+        .add-opt-btn.selected { background: var(--accent-color); color: #000; font-weight: bold; border-color: var(--accent-color); }
+        .input-group { display: none; animation: fadeIn 0.2s; }
+        .input-group.active { display: block; }
+        
+        .add-card input[type="text"], .add-card select { background: #222; border: 1px solid #444; color: white; }
+
+        /* Aggiungi modal grid*/
+        .selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .selection-grid.style-grid { grid-template-columns: repeat(2, 1fr); }
+        .grid-card { 
+            background: rgba(128,128,128,0.1); border: 1px solid #444; padding: 12px 5px; 
+            border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.2s; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; 
+            color: #aaa; user-select: none;
+        }
+        .grid-card:hover { background: rgba(128,128,128,0.2); border-color: #888; color: #fff; transform: translateY(-2px); }
+        .grid-card.selected { 
+            background: rgba(0, 243, 255, 0.1); border-color: var(--accent-color); 
+            color: var(--accent-color); box-shadow: 0 5px 15px rgba(0,243,255,0.15); 
+        }
+        .grid-card i { 
+    font-size: 2em; 
+    display: block; 
+    margin-bottom: 8px; 
+    line-height: 1; 
+}
+.grid-card span { 
+    font-size: 0.85em; 
+    font-weight: bold; 
+    line-height: 1.2; 
+    display: block;
+}
+        
+        /*Colori delle note*/
+        .grid-card[data-color="yellow"] { border-bottom: 4px solid #fdfd96; }
+        .grid-card[data-color="blue"] { border-bottom: 4px solid #aec6cf; }
+        .grid-card[data-color="pink"] { border-bottom: 4px solid #ffb7b2; }
+        .grid-card[data-color="green"] { border-bottom: 4px solid #c8e6c9; }
+
+.guide-btn {
+            margin-top: auto; width: 100%; padding: 12px; 
+            background: var(--accent-color); color: #000; 
+            border: none; cursor: pointer; border-radius: 8px; 
+            font-weight: bold; text-transform: uppercase; 
+            font-size: 0.95em; display: flex; align-items: center; 
+            justify-content: center; gap: 8px; transition: filter 0.2s;
+        }
+        .guide-btn:hover {
+            filter: brightness(1.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-controls">
+        <button id="edit-btn" class="control-btn" title="Edit mode"><i class="fas fa-pencil-alt"></i></button>
+        <button id="settings-btn" class="control-btn" title="Settings"><i class="fas fa-cog"></i></button>
+    </div>
+
+    <div id="settings-modal">
+        <button class="close-settings-fab" id="close-settings"><i class="fas fa-times"></i></button>
+        
+        <div class="settings-sidebar">
+            <h2 style="color:var(--accent-color); margin-top:0; padding-bottom: 20px; border-bottom: 1px solid var(--win-border); font-size: 1.8em;">Welcome to SHARD OS! </h2>
+            <button class="tab-btn active" data-tab="gen">General</button>
+            <button class="tab-btn" data-tab="theme">Theme & Background</button>
+            <button class="tab-btn" data-tab="widgets">Widget</button>
+            <button class="tab-btn" data-tab="data">Data & Backup</button>
+            <button class="tab-btn" data-tab="info">Info</button>
+            
+        <button id="btn-guide" class="guide-btn">
+                <i class="fas fa-book"></i> User Guide
+            </button>
+
+        </div>
+        
+        <div class="settings-content">
+            
+            <div id="gen" class="settings-section active">
+                <h1>General settings</h1>
+                
+                <h2 class="settings-subheader">Interface and search</h2>
+                <div class="control-row">
+                    <span>Default search engine</span>
+                    <select id="set-engine">
+                        <option value="google">Google</option>
+                        <option value="bing">Bing</option>
+                        <option value="duckduckgo">DuckDuckGo</option>
+                        <option value="ecosia">Ecosia</option>
+                    </select>
+                </div>
+                <div class="control-row">
+                    <span>Show windows title bar</span>
+                    <input type="checkbox" id="set-show-titles" style="transform: scale(1.3);">
+                </div>
+                <div class="control-row">
+                    <span>Align windows to the grid (snap to grid)</span>
+                    <input type="checkbox" id="set-snap-grid" checked style="transform: scale(1.3);">
+                </div>
+
+                <h2 class="settings-subheader">Live data and network</h2>
+                <div class="control-row">
+                    <span>Shard Update (seconds)</span>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <input type="number" id="shard-refresh-rate" min="1" max="3600" value="10" style="width: 80px; font-weight: bold; text-align: center;">
+                    </div>
+                </div>
+                <div style="padding: 15px; border-left: 4px solid #ffaa00; background: rgba(255, 170, 0, 0.1); border-radius: 4px; margin-top: 10px;">
+                    <p style="margin: 0; font-size: 0.95em; color: var(--text-color); line-height: 1.5;">
+                        <strong style="color: #ffaa00;">⚠️ Warning:</strong>  Adjust your refresh rate carefully. Too short an interval (under 5 seconds) could cause your requests to be detected as bot behavior from the source site, causing temporary crashes. For more information, visit the guide.
+                    </p>
+                </div>
+            </div>
+
+            <div id="theme" class="settings-section">
+                <h1>Theme and Customization</h1>
+                
+                <h2 class="settings-subheader">Windows Appearance</h2>
+                <div class="control-row">
+                    <span>Interface Style</span>
+                    <select id="set-interface-theme">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="transparent">Trasparent</option>
+                    </select>
+                </div>
+                <div class="control-row">
+                    <span>System Color</span>
+                    <input type="color" id="set-accent-color" style="height: 40px; width: 60px; padding: 2px; cursor: pointer;">
+                </div>
+                
+                <div class="control-row" id="opacity-control-row">
+                    <span>Background Opacity</span>
+                  <input type="range" id="set-win-opacity" min="10" max="100" value="85" style="width: 250px; cursor: pointer; accent-color: var(--accent-color);">
+                </div>
+                
+                <div id="opacity-warning-row" style="display:none; padding: 15px; border-left: 4px solid var(--accent-color); background: rgba(128,128,128,0.1); border-radius: 4px; margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 0.95em; color: var(--text-color); line-height: 1.5;">
+                        <strong style="color: var(--accent-color);">💡 Info:</strong> With the <strong>Transparent</strong> theme, windows have no background. Opacity is not adjustable in this mode.
+                    </p>
+                </div>
+                
+                <h2 class="settings-subheader">Desktop Wallpaper</h2>
+                <div class="control-row">
+                    <span>Wallpaper</span>
+                    <select id="set-bg-mode">
+                        <option value="space">Earth</option>
+                        <option value="sea">Sea</option>
+                        <option value="mountain">Mountain</option>
+                        <option value="custom">Custom URL</option>
+                        <option value="color">Solid Color</option>
+                    </select>
+                </div>
+                <div class="control-row" id="solid-color-row" style="display:none;">
+                    <span>Choose Background Color</span>
+                    <input type="color" id="set-solid-color" style="height: 40px; width: 60px; padding: 2px; cursor: pointer;">
+                </div>
+                <div class="control-row" id="custom-bg-row" style="display:none;">
+                    <span>Image Address (URL)</span>
+                    <input type="text" id="set-bg-url" placeholder="https://..." style="width: 60%;">
+                </div>
+            </div>
+
+            <div id="widgets" class="settings-section">
+                <h1>Widget configuration</h1>
+                
+                <h2 class="settings-subheader">Weather</h2>
+                <div class="control-row">
+                    <span>Position</span>
+                    <select id="set-weather-mode">
+                        <option value="auto">📍 Automatic GPS </option>
+                        <option value="manual">🗺️ Manual city</option>
+                    </select>
+                </div>
+                <div class="control-row" id="weather-city-row" style="display:none">
+                    <span>Set city (Ex: Rome)</span>
+                    <input type="text" id="set-weather-city" placeholder="Enter city..." style="width: 50%;">
+                </div>
+                
+                <h2 class="settings-subheader">Notes</h2>
+                <div class="control-row">
+                    <span>Text font</span>
+                    <select id="set-note-font">
+                        <option value="inherit">Default (OS theme)</option>
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="'Courier New', monospace">Courier (typewriter)</option>
+                        <option value="'Times New Roman', serif">Times New Roman</option>
+                        <option value="'Comic Sans MS', cursive">Comic Sans</option>
+                    </select>
+                </div>
+                <div class="control-row">
+                    <span>Text Size</span>
+                    <select id="set-note-size">
+                        <option value="0.9em">Small</option>
+                        <option value="1.1em" selected>Normal</option>
+                        <option value="1.5em">Big</option>
+                        <option value="2em">Very big</option>
+                    </select>
+                </div>
+               
+                <h2 class="settings-subheader">To-Do List</h2>
+                <div class="control-row">
+                    <span>Show "✕" button (Quick Delete)</span>
+                    <select id="setting-todo-delete">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="control-row">
+                    <span>Show Task Added Date</span>
+                    <select id="setting-todo-date">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                
+                <div style="margin-top: 30px; text-align: right;">
+                    <button class="action-btn" id="apply-widget-settings">Save changes</button>
+                </div>
+            </div>
+
+            <div id="data" class="settings-section">
+                <h1>Data Management</h1>
+                
+                <h2 class="settings-subheader">Sistem backup</h2>
+                <p style="color: var(--title-color); margin-bottom: 25px; font-size: 1.1em;">Export your widgets, windows and settings so you don't lose them or import them to another PC.</p>
+                <div class="control-row" style="border: none;">
+                    <button class="action-btn" id="btn-export" style="font-size: 1em; padding: 15px 30px;"><i class="fas fa-download"></i>Export Backup</button>
+                    <button class="action-btn" id="btn-import-trigger" style="font-size: 1em; padding: 15px 30px;"><i class="fas fa-upload"></i> Import Backup</button>
+                    <input type="file" id="btn-import-file" style="display:none" accept=".json">
+                </div>
+                
+                <h2 class="settings-subheader" style="margin-top: 50px; color: #ff4444; border-color: rgba(255, 68, 68, 0.2);">Denger zone</h2>
+                <div class="control-row" style="border: none; justify-content: space-between;">
+                    <span style="color: var(--title-color); font-size: 1.1em;">Resets Shard OS to factory settings. This action is irreversible.</span>
+                    <button class="action-btn danger-btn" id="btn-reset" style="font-size: 1em; padding: 15px 30px;"><i class="fas fa-skull-crossbones"></i> Complete Reset</button>
+                </div>
+            </div>
+
+            <div id="info" class="settings-section">
+                <div class="credits-box" style="margin-top: 20px; padding-top: 10px; text-align: center;">
+                    <h1 style="color:var(--accent-color); font-size: 4.5em; margin-bottom: 0px; font-weight: 800; letter-spacing: -2px;">SHARD OS</h1>
+                    <p style="letter-spacing: 12px; color: var(--title-color); font-weight: bold; font-size: 1.3em; margin-top: 5px;">ULTIMATE EDITION</p>
+                    
+                    <div style="margin: 50px 0;">
+                        <p style="font-size: 1.8em; color: var(--text-color);">Created with ❤️ by <strong style="color: var(--accent-color);">Lorenzo U. 🚀</strong></p>
+                    </div>
+                    
+                    <div style="margin-top: 40px; padding: 40px; background: rgba(128,128,128,0.05); border-radius: 20px; display: inline-block; text-align: left; border: 1px solid var(--win-border);">
+                        <h3 style="color: var(--accent-color); margin-top: 0; margin-bottom: 25px; font-size: 1.6em; text-transform: uppercase; letter-spacing: 2px;">Special Thanks</h3>
+                        
+                        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 20px;">
+                            <li style="font-size:1.3em; color:var(--text-color); display: flex; align-items: center; gap: 20px;">
+                                <i class="fas fa-cloud-sun" style="font-size: 1.5em; width: 40px; text-align: center; color: #ffcc00; flex-shrink: 0;"></i> 
+                                <span>Weather via Open-Meteo API</span>
+                            </li>
+                            <li style="font-size:1.3em; color:var(--text-color); display: flex; align-items: center; gap: 20px;">
+                                <i class="fas fa-image" style="font-size: 1.5em; width: 40px; text-align: center; color: #ff4444; flex-shrink: 0;"></i> 
+                                <span>Wallpaper via GoodFon</span>
+                            </li>
+                            <li style="font-size:1.3em; color:var(--text-color); display: flex; align-items: center; gap: 20px;">
+                                <i class="fas fa-music" style="font-size: 1.5em; width: 40px; text-align: center; color: #1DB954; flex-shrink: 0;"></i> 
+                                <span>Spotify Embeds Integration</span>
+                                 <li style="font-size:1.3em; color:var(--text-color); display: flex; align-items: center; gap: 20px;">
+                                <i class="fas fa-laptop" style="font-size: 1.5em; width: 40px; text-align: center; color: #1d25b9; flex-shrink: 0;"></i> 
+                                <span>Flavortown (Hack Club)</span>
+                            </li>
+                        </ul>
+                    </div>
+                <h4>I would also like to thank my entire family and relatives for supporting me during the creation of this project and for encouraging me to always do my best. And finally, my classmates and friends for always appreciating my work and sharing their ideas to help improve my creations.</h4>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div id="desktop"></div>
+    <button id="add-btn" class="fab">+</button>
+
+    <div id="add-modal">
+        <div class="add-card">
+            <h2 style="margin-top:0; color:var(--accent-color); font-weight: bold;">ADD NEW</h2>
+            
+            <div class="add-options">
+                <button class="add-opt-btn selected" data-target="opt-widget"><i class="fas fa-puzzle-piece"></i> Widget</button>
+                <button class="add-opt-btn" data-target="opt-portal"><i class="fas fa-globe"></i> Site</button>
+                <button class="add-opt-btn" data-target="opt-shard"><i class="fas fa-bolt"></i>Live data</button>
+            </div>
+
+            <div id="opt-widget" class="input-group active">
+                <p style="font-weight: bold; margin-bottom: 10px; color: var(--accent-color);">1. Select Widgets</p>
+                <div id="widget-type-grid" class="selection-grid"></div>
+                
+                <div id="widget-style-section" style="display:none; margin-top: 20px;">
+                    <p style="font-weight: bold; margin-bottom: 10px; color: var(--accent-color);">2. Choose the Style</p>
+                    <div id="widget-style-grid" class="selection-grid style-grid"></div>
+                </div>
+
+                <div id="widget-timezone-box" style="display:none; margin-top: 20px;">
+                    <p style="font-weight: bold; margin-bottom: 5px;">Time zone:</p>
+                    <select id="widget-timezone-select" style="width:100%; padding:10px;">
+                        <option value="local">📍 Local (Device)</option>
+                        <option value="Europe/Rome">🇮🇹 Rome (+1)</option>
+                        <option value="Europe/London">🇬🇧 London (UTC)</option>
+                        <option value="America/New_York">🇺🇸 New York (-5)</option>
+                        <option value="Asia/Tokyo">🇯🇵 Tokyo (+9)</option>
+                        <option value="Europe/Moscow">🇷🇺 Moscow (+3)</option>
+                        <option value="Australia/Sydney">🇦🇺 Sydney (+11)</option>
+                        <option value="UTC">🌐 Universal UTC</option>
+                    </select>
+                </div>
+                
+                <div id="widget-spotify-box" style="display:none; margin-top: 20px;">
+                    <p style="font-weight: bold; margin-bottom: 5px;">Spotify URL or URI:</p>
+                    <input type="text" id="widget-spotify-url" placeholder="es. http://googleusercontent.com/spotify.com/..." style="width:100%; padding:10px;">
+                    <p style="font-size: 0.8em; color: #888; margin-top: 5px;">Paste the link of a playlist, album, song, or podcast.</p>
+                </div>
+            </div> 
+
+            <div id="opt-portal" class="input-group">
+                <p style="font-weight: bold; margin-bottom: 5px;">Website URL:</p>
+                <input type="text" id="new-url-input" placeholder="https://..." style="width:100%; padding:10px;">
+            </div>
+
+            <div id="opt-shard" class="input-group">
+                <p style="font-weight: bold; margin-bottom: 5px;">URL Source:</p>
+                <input type="text" id="new-shard-url" placeholder="URL..." style="width:100%; padding:10px; margin-bottom:10px;">
+                <p style="font-weight: bold; margin-bottom: 5px;">CSS selector:</p>
+                <input type="text" id="new-shard-sel" placeholder="ex. h1, .price" style="width:100%; padding:10px;">
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:25px;">
+                <button id="cancel-add-btn" style="padding:10px 20px; background:transparent; border:1px solid #555; color:#aaa; cursor:pointer; border-radius:6px; font-weight: bold;">CANCEL</button>
+                <button id="confirm-add-btn" style="padding:10px 20px; background:var(--accent-color); border:none; color:#000; font-weight:bold; cursor:pointer; border-radius:6px;">ADD</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
