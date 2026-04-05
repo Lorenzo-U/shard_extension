@@ -57,11 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.readAsText(file);
         });
     }
-    // PULSANTE GUIDA
+    // Pulsante guide
     const btnGuide = document.getElementById('btn-guide');
     if (btnGuide) {
         btnGuide.addEventListener('click', () => {
-            window.open('Guide/guide.html', '_blank');
+            chrome.tabs.create({ url: 'https://lorenzo-u.github.io/shard_extension/' });
         });
     }
 });
