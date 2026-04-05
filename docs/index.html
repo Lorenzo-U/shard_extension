@@ -1,0 +1,1180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHARD - Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; 
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /*Scrollbar*/
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f3ff; 
+        }
+
+        /*effects*/
+        .glow-cyan { text-shadow: 0 0 10px rgba(0,243,255,0.5); }
+        .bg-glow {
+            position: fixed;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.03) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /*Transitions*/  
+        .page-view {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .page-hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        .page-active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '');
+        </script>
+</head>
+
+ <!--menu  -->  
+
+<body class="antialiased selection:bg-cyan-500/30 selection:text-cyan-200 flex flex-col md:flex-row min-h-screen">
+    <div class="bg-glow"></div>
+
+    <aside class="w-full md:w-72 md:fixed md:h-screen bg-slate-900/40 backdrop-blur-2xl border-b md:border-b-0 md:border-r border-white/10 z-50 flex flex-col">
+        <div class="p-8 border-b border-white/5">
+            <div class="flex items-center gap-3 mb-2">
+                <i data-lucide="hexagon" class="text-cyan-400 w-8 h-8"></i>
+                <h1 class="text-2xl font-black tracking-wider text-white glow-cyan">SHARD</h1>
+            </div>
+            <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Documentation v1.0</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
+            <button data-target="page-benvenuto" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_10px_rgba(0,243,255,0.1)]">
+                <i data-lucide="sparkles" class="w-5 h-5"></i> <span class="font-medium">Introduction</span>
+            </button>
+            <button data-target="page-installazione" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="download" class="w-5 h-5"></i> <span class="font-medium">Installation</span>
+            </button>
+             <button data-target="page-requisiti" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="cpu" class="w-5 h-5"></i> <span class="font-medium">System Requirements</span>
+            </button>
+            <button data-target="page-widget" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="layout-grid" class="w-5 h-5"></i> <span class="font-medium">Widget Catalog</span>
+            </button>
+            <button data-target="page-guida" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="book-open" class="w-5 h-5"></i> <span class="font-medium">User Guide</span>
+            </button>
+            <button data-target="page-troubleshooting" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="wrench" class="w-5 h-5"></i> <span class="font-medium">Q&A and FAQ</span>
+            </button>
+            <button data-target="page-dev-notes" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="terminal" class="w-5 h-5"></i> <span class="font-medium">Developer Notes</span>
+            </button>
+            <button data-target="page-privacy" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="shield" class="w-5 h-5"></i> <span class="font-medium">Privacy Policy</span>
+            </button>
+            
+            <div class="h-px bg-white/10 my-4"></div>
+
+            <button data-target="page-lorenzou" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="user" class="w-5 h-5"></i> <span class="font-medium">Lorenzo U</span>
+            </button>
+            <button data-target="page-contatti" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="mail" class="w-5 h-5"></i> <span class="font-medium">Contact me!</span>
+            </button>
+            <button data-target="page-ringraziamenti" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="heart" class="w-5 h-5"></i> <span class="font-medium">Acknowledgments</span>
+            </button>
+
+            <!-- Non visibile -->  
+            <button data-target="page-privacy-policies" class="hidden nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+                <i data-lucide="shield-alert" class="w-5 h-5"></i> <span class="font-medium">NON VISIBILE Privacy Policies</span>
+            </button>
+            
+
+           
+        </nav>
+
+        <div class="p-6 border-t border-white/5">
+            <a href="https://github.com/Lorenzo-U/shard_extension/releases/tag/v1.0" target="_blank" class="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-cyan-600 to-cyan-400 hover:from-cyan-500 hover:to-cyan-300 text-slate-950 font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(0,243,255,0.3)] hover:shadow-[0_0_25px_rgba(0,243,255,0.5)]">
+                <i data-lucide="external-link" class="w-4 h-4"></i> Get SHARD
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 md:ml-72 min-h-screen relative pb-20">
+         <!-- Benvenuto -->  
+        <div id="page-benvenuto" class="page-view page-active max-w-5xl mx-auto p-6 lg:p-12">
+            <div class="space-y-12">
+                <header class="mb-12">
+                    <h1 class="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight">Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">SHARD</span></h1>
+                    
+                    <div class="flex flex-wrap items-center gap-4">
+                        <div class="px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm font-semibold tracking-wide">
+                            Version 1.0
+                        </div>
+                        <a href="https://github.com/Lorenzo-U/shard_extension/releases/tag/v1.0" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-[0_0_15px_rgba(0,243,255,0.4)] hover:-translate-y-0.5">
+                            <i data-lucide="download" class="w-5 h-5"></i> Install Now
+                        </a>
+                    </div>
+                </header>
+                
+                <div class="space-y-16 text-lg leading-relaxed text-slate-300">
+                    <div class="prose prose-invert max-w-none">
+                        <h2 class="text-3xl font-bold text-white mb-6 border-b border-white/10 pb-4">Discover SHARD: Your New Dimension on the Web</h2>
+                        <p class="text-xl text-slate-300 font-light mb-4">Forget the classic, boring, and static "New Tab" screen of your browser. SHARD is not just a simple extension: it's an <strong class="text-cyan-300">Interactive Web Dashboard</strong>, a real "Operating System" integrated directly into Google Chrome.</p>
+                        <p>Born from the inspiration of the Hack Club's Flavourtown contest, SHARD was created with a rebellious and innovative philosophy: to give the user total control back over their digital space, allowing them to shape, extract, and manipulate the web at will.</p>
+                    </div>
+
+                    <div class="rounded-2xl overflow-hidden border border-white/10 bg-black relative shadow-[0_0_30px_rgba(0,243,255,0.15)] my-10 group">
+                        <span class="absolute top-4 left-4 bg-black/60 text-cyan-300 text-sm font-semibold px-4 py-2 rounded-full backdrop-blur-md z-10 border border-white/10 flex items-center gap-2"><i data-lucide="image" class="w-4 h-4"></i> Your new Home Page</span>
+                        <img src="Img/1.1.gif" alt="Dashboard Preview" class="w-full h-auto object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+
+                    <div class="bg-slate-900/60 border border-white/10 rounded-3xl p-8 backdrop-blur-md relative overflow-hidden shadow-2xl">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3 relative z-10">
+                            <div class="p-2 bg-cyan-500/20 rounded-lg"><i data-lucide="rocket" class="text-cyan-400 w-6 h-6"></i></div>
+                            What is SHARD?
+                        </h2>
+                        <p class="mb-8 relative z-10 text-slate-300">SHARD is a dynamic and modular workspace that replaces your browser's home page. Instead of opening dozens of tabs to check the news, a stock price, your to-do list, or the weather, SHARD allows you to have everything under control in a single command dashboard.</p>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 relative z-10">
+                            <div class="bg-slate-950/50 p-6 rounded-2xl border border-white/5 hover:border-cyan-500/30 transition-colors">
+                                <i data-lucide="zap" class="text-yellow-400 w-8 h-8 mb-4"></i>
+                                <h3 class="text-white font-bold mb-2 text-xl">The "Shards"</h3>
+                                <p class="text-sm text-slate-400">Web fragments. Live data extracted directly from your favorite sites that update in real time.</p>
+                            </div>
+                            <div class="bg-slate-950/50 p-6 rounded-2xl border border-white/5 hover:border-purple-500/30 transition-colors">
+                                <i data-lucide="layout" class="text-purple-400 w-8 h-8 mb-4"></i>
+                                <h3 class="text-white font-bold mb-2 text-xl">The "Portals"</h3>
+                                <p class="text-sm text-slate-400">Entire web sites encapsulated and navigable in floating, resizable windows on your home page.</p>
+                            </div>
+                            <div class="bg-slate-950/50 p-6 rounded-2xl border border-white/5 hover:border-green-500/30 transition-colors">
+                                <i data-lucide="blocks" class="text-green-400 w-8 h-8 mb-4"></i>
+                                <h3 class="text-white font-bold mb-2 text-xl">Native Widgets</h3>
+                                <p class="text-sm text-slate-400">Local mini-applications (Clock, Weather, Spotify, Notes) written in pure, lightweight JavaScript.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 my-10">
+                        <div class="rounded-2xl overflow-hidden border border-white/10 bg-black relative group shadow-lg">
+                            <span class="absolute top-3 left-3 bg-black/60 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-md z-10 border border-white/10">Edit Mode</span>
+                            <img src="Img/1.2 Edit Mode.gif" alt="Edit Mode Preview" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                        <div class="rounded-2xl overflow-hidden border border-white/10 bg-black relative group shadow-lg">
+                            <span class="absolute top-3 left-3 bg-black/60 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-md z-10 border border-white/10">Widget</span>
+                            <img src="Img/1.3  Widgets.gif" alt="Widgets" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-8 border-b border-white/10 pb-4">How Does the Magic Work? <span class="text-slate-500 text-xl font-normal">(Under the Hood)</span></h2>
+                        <p class="mb-8 text-xl text-slate-300 font-light">SHARD doesn't just beautify the home page; it performs real technical acrobatics using the latest Manifest V3 APIs.</p>
+                        
+                        <div class="space-y-8">
+                            <div class="flex flex-col md:flex-row gap-6 bg-white/[0.02] p-6 rounded-2xl border border-white/5">
+                                <div class="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-500/50 flex items-center justify-center text-cyan-400 font-bold flex-shrink-0 text-2xl shadow-[0_0_15px_rgba(0,243,255,0.2)]">1</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white mb-3">Real-Time Data Extraction</h3>
+                                    <p class="text-slate-400 text-base leading-relaxed">Thanks to the injection script (<code class="text-cyan-200 bg-cyan-900/30 px-1 rounded">content.js</code>), SHARD turns your cursor into a precision tool. By holding down <kbd class="bg-slate-800 px-2 py-0.5 rounded border border-slate-600 text-sm">Ctrl</kbd> and clicking on text, it calculates the exact CSS path. The background engine constantly polls that site, bypassing the cache (<code class="text-cyan-200">Pragma: no-cache</code>) to guarantee data updated by the second.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col md:flex-row gap-6 bg-white/[0.02] p-6 rounded-2xl border border-white/5">
+                                <div class="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-500/50 flex items-center justify-center text-purple-400 font-bold flex-shrink-0 text-2xl shadow-[0_0_15px_rgba(168,85,247,0.2)]">2</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white mb-3">Breaking Down Security Walls</h3>
+                                    <p class="text-slate-400 text-base leading-relaxed">Many sites prevent embedding. SHARD uses <code class="text-purple-200 bg-purple-900/30 px-1 rounded">declarativeNetRequest</code> rules to intercept traffic and surgically remove headers like <code class="text-purple-200">x-frame-options</code>. The result? You can open complex sites in floating windows, bypassing browser blocks.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col md:flex-row gap-6 bg-white/[0.02] p-6 rounded-2xl border border-white/5">
+                                <div class="w-14 h-14 rounded-2xl bg-green-500/20 border border-green-500/50 flex items-center justify-center text-green-400 font-bold flex-shrink-0 text-2xl shadow-[0_0_15px_rgba(74,222,128,0.2)]">3</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white mb-3">Zero-Lag Performance and Privacy</h3>
+                                    <p class="text-slate-400 text-base leading-relaxed">The entire visual architecture is written without heavy frameworks. Your layouts and data are saved exclusively on your computer via <code class="text-green-200 bg-green-900/30 px-1 rounded">chrome.storage.local</code>. No external servers, no tracking: total privacy.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-indigo-900/40 to-slate-900 border border-indigo-500/20 rounded-3xl p-8 md:p-10 backdrop-blur-md">
+                        <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+                            <i data-lucide="target" class="text-indigo-400 w-8 h-8"></i> Who is it for?
+                        </h2>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="space-y-4">
+                                <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4"><i data-lucide="code" class="text-indigo-400 w-6 h-6"></i></div>
+                                <h3 class="text-xl font-bold text-white">Developers and Hackers</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">They will appreciate its raw and ingenious nature. Interfacing with UNIX timestamps, extracting CSS selectors, and manipulating the HTTP header to push software limits.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4"><i data-lucide="briefcase" class="text-indigo-400 w-6 h-6"></i></div>
+                                <h3 class="text-xl font-bold text-white">Power Users and PROs</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">Traders watching stock tickers, data analysts, or managers who want a to-do list, calendar, and email in a single "Heads-Up Display" view.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4"><i data-lucide="graduation-cap" class="text-indigo-400 w-6 h-6"></i></div>
+                                <h3 class="text-xl font-bold text-white">Students and Creatives</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">Organize your studies, take notes on the fly, listen to Spotify without switching tabs. All in an aesthetically pleasing environment.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4"><i data-lucide="layout-dashboard" class="text-indigo-400 w-6 h-6"></i></div>
+                                <h3 class="text-xl font-bold text-white">Those who hate clutter</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">If your browser constantly has 50 open tabs eating up all your RAM, SHARD is the ultimate cure to restore order.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Installazione -->  
+        <div id="page-installazione" class="page-view page-hidden max-w-4xl mx-auto p-6 lg:p-12">
+            <h1 class="text-4xl font-black text-white mb-4">Installation</h1>
+            <p class="text-xl text-slate-400 mb-10">Installation guide on Chrome / Edge / Brave (Unpacked Extension)</p>
+            
+            <div class="mb-12 rounded-3xl overflow-hidden border border-white/10 bg-slate-900 relative aspect-video group shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"></div>
+              <iframe 
+                    class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity cursor-pointer" 
+                    src="https://player.vimeo.com/video/1180270934" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="Shard installation video" allowfullscreen>
+                </iframe>
+            </div>
+            
+
+            <div class="bg-yellow-500/10 border border-yellow-500/20 text-yellow-200 p-5 rounded-2xl mb-10 flex gap-4 shadow-lg">
+                <i data-lucide="alert-triangle" class="w-6 h-6 flex-shrink-0 text-yellow-500 mt-1"></i>
+                <div class="text-sm md:text-base">
+                    <strong class="block text-yellow-400 mb-1">Preliminary Note:</strong> 
+                    The extension <strong>is not yet published on the Chrome Web Store</strong>. It must be installed manually in Developer mode. Here is a step-by-step guide:
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-slate-900/80 border border-white/5 p-6 rounded-2xl flex gap-6 items-start">
+                    <div class="bg-cyan-500/20 text-cyan-400 w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0 border border-cyan-500/30">1</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Download the files</h3>
+                        <p class="text-slate-400">Download the project's ZIP file from the button in the left corner of the screen (If you have any problem, you can also use the direct link: https://github.com/Lorenzo-U/shard_extension/releases/tag/v1.0) and choose a folder on your computer to extract it. <br><br><br>
+                         <div class="bg-yellow-500/10 border border-yellow-500/20 text-yellow-200 p-5 rounded-2xl mb-10 flex gap-4 shadow-lg">
+                                <i data-lucide="alert-triangle" class="w-6 h-6 flex-shrink-0 text-yellow-500 mt-1"></i>
+                                <div class="text-sm md:text-base">
+                                    <strong class="block text-yellow-400 mb-1">Attention:</strong> 
+                                    <strong>Do not delete or move this folder</strong> after installation, otherwise the extension will stop working.
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="bg-slate-900/80 border border-white/5 p-6 rounded-2xl flex gap-6 items-start">
+                    <div class="bg-cyan-500/20 text-cyan-400 w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0 border border-cyan-500/30">2</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Open Extensions management</h3>
+                        <p class="text-slate-400">Open Google Chrome (or a compatible Chromium browser like Edge or Brave). In the address bar, type: <code class="bg-slate-950 px-2 py-1 rounded text-cyan-300 font-mono text-sm border border-white/10 select-all">chrome://extensions/</code> and press Enter.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-900/80 border border-white/5 p-6 rounded-2xl flex gap-6 items-start">
+                    <div class="bg-cyan-500/20 text-cyan-400 w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0 border border-cyan-500/30">3</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Enable Developer Mode</h3>
+                        <p class="text-slate-400">At the top right of the page, toggle the <strong>"Developer mode"</strong> switch.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-900/80 border border-white/5 p-6 rounded-2xl flex gap-6 items-start">
+                    <div class="bg-cyan-500/20 text-cyan-400 w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0 border border-cyan-500/30">4</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Load the extension</h3>
+                        <p class="text-slate-400">Click on the <strong>"Load unpacked"</strong> button that appeared at the top left. Select the folder (the one containing the <code class="text-cyan-400 text-sm">manifest.json</code> file) you extracted in step 1. You might get a message like: "This page was changed by the SHARD extension. Do you want to keep it or revert?" Click keep.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-900/80 border border-white/5 p-6 rounded-2xl flex gap-6 items-start">
+                    <div class="bg-cyan-500/20 text-cyan-400 w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0 border border-cyan-500/30">5</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Remove the Footer bar</h3>
+                        <p class="text-slate-400">Right-click on the bottom bar and select '<strong>Don't show the footer</strong>', now you can have SHARD in full screen!</p>
+                    </div>
+                </div>
+                <div class="bg-green-500/10 border border-green-500/20 p-6 rounded-2xl text-center mt-8">
+                    <i data-lucide="check-circle" class="w-12 h-12 text-green-400 mx-auto mb-3"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Installation Completed!</h3>
+                    <p class="text-green-200">Open a New Tab in Chrome: you should see the beautiful SHARD dashboard instead of the standard page.</p>
+                </div>
+            </div>
+        </div>
+        <!-- User guide   -->   
+        <div id="page-guida" class="page-view page-hidden max-w-5xl mx-auto p-6 lg:p-12">
+            <h1 class="text-4xl font-black text-white mb-4">User Guide</h1>
+            <p class="text-xl text-slate-400 mb-12">Learn to manipulate the web with SHARD's tools.</p>
+
+            <div class="space-y-12">
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-cyan-500 shadow-[0_0_20px_#00f3ff]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-cyan-500/10 rounded-xl"><i data-lucide="mouse-pointer-click" class="w-8 h-8 text-cyan-400"></i></div>
+                        <h2 class="text-3xl font-bold text-white">1. Capture live data (Create a "Shard")</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <p class="text-slate-400 mb-6 text-lg">Extract text in real-time from any website to always have it updated on your dashboard.</p>
+                            <ul class="space-y-4 text-slate-300">
+                                <li class="flex items-start gap-3"><i data-lucide="arrow-right" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> Go to any website.</li>
+                                <li class="flex items-start gap-3"><i data-lucide="arrow-right" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> Hold down <kbd class="bg-slate-800 px-2 py-1 rounded border border-slate-600 font-mono text-sm text-white">Ctrl</kbd> and <strong>Left-click</strong> on the text element you want to capture.</li>
+                                <li class="flex items-start gap-3"><i data-lucide="arrow-right" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> The <strong>"SHARD DETECTED"</strong> banner will appear.</li>
+                                <li class="flex items-start gap-3"><i data-lucide="arrow-right" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> Click on <strong>"DATA (Live)"</strong>.</li>
+                                <li class="flex items-start gap-3"><i data-lucide="arrow-right" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> Open a New Tab: your data will be there, updated automatically! To select the refresh rate (how often Shard should check if the data has updated), go to settings/general.</li>
+                            </ul>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden border border-white/10 bg-black relative shadow-lg">
+                            <img src="Img/3.1 Capture live data.gif" alt="Demonstration" class="w-full h-auto object-cover opacity-80">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-purple-500 shadow-[0_0_20px_#a855f7]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-purple-500/10 rounded-xl"><i data-lucide="layers" class="w-8 h-8 text-purple-400"></i></div>
+                        <h2 class="text-3xl font-bold text-white">2. Create a "Portal" (Entire site)</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="order-2 md:order-1 rounded-2xl overflow-hidden border border-white/10 bg-black relative shadow-lg">
+                            <img src="Img/3.2 Create a portal.gif" alt="Screenshot Portal" class="w-full h-auto object-cover opacity-80">
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <p class="text-slate-400 mb-6 text-lg">Encapsulate an entire website within your dashboard for parallel browsing.</p>
+                            <ul class="space-y-4 text-slate-300 mb-6">
+                                <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-purple-500 mt-1 flex-shrink-0"></i> <strong>From the Web:</strong> Click <kbd class="bg-slate-800 px-2 py-0.5 rounded text-xs text-white">Ctrl</kbd> + Click anywhere and choose <strong>"WEBSITE"</strong>.</li>
+                                <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-purple-500 mt-1 flex-shrink-0"></i> <strong>From the Dashboard:</strong> Click the <strong>+</strong> at the bottom right and paste the URL.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-green-500 shadow-[0_0_20px_#4ade80]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-green-500/10 rounded-xl"><i data-lucide="move" class="w-8 h-8 text-green-400"></i></div>
+                        <h2 class="text-3xl font-bold text-white">3. Edit Mode (Drag & Drop)</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <p class="text-slate-400 mb-6 text-lg">Customize the layout by clicking on the <strong>pencil</strong> icon at the top right.</p>
+                            <ul class="space-y-4 text-slate-300">
+                                <li class="flex items-center gap-3"><div class="w-2 h-2 bg-green-500 rounded-full"></div> <strong>Move:</strong> Drag the title bar.</li>
+                                <li class="flex items-center gap-3"><div class="w-2 h-2 bg-green-500 rounded-full"></div> <strong>Resize:</strong> Drag the bottom right corner.</li>
+                                <li class="flex items-center gap-3"><div class="w-2 h-2 bg-red-500 rounded-full"></div> <strong>Delete:</strong> Click the red dot.</li>
+                            </ul>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden border border-white/10 bg-black relative shadow-lg">
+                            <img src="Img/3.3 Edit Mode.gif" alt="GIF Moving" class="w-full h-auto object-cover opacity-80">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Widgets -->  
+        <div id="page-widget" class="page-view page-hidden max-w-6xl mx-auto p-6 lg:p-12">
+            <header class="mb-12 text-center max-w-2xl mx-auto">
+                <h1 class="text-4xl font-black text-white mb-4">Native Widget Catalog</h1>
+                <p class="text-xl text-slate-400">Add local mini-applications to expand your Dashboard's features.</p>
+            </header>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <div class="bg-slate-900/60 p-6 rounded-3xl border border-blue-500/20 flex flex-col backdrop-blur-sm shadow-lg">
+                    <div class="flex items-center gap-4 mb-4"><div class="p-3 bg-blue-500/10 rounded-xl"><i data-lucide="search" class="w-6 h-6 text-blue-400"></i></div><h3 class="text-2xl font-bold text-white">Search</h3></div>
+                    <div class="mb-5 rounded-xl border border-white/5 bg-black"><img src="Img/2.1 Search Bar.png" class="w-full h-40 object-cover opacity-80"></div>
+                    <p class="text-slate-300 mb-4 flex-grow">Search the web from a single point. Supports major search engines. <br><br>
+                    <i>Note: To change the default search engine, go to Settings < General settings < Interface and search < Default search engine and choose between Google, Bing, DuckDuckGo, and Ecosia.</i>
+                    </p>
+                </div>
+                
+                <div class="bg-slate-900/60 p-6 rounded-3xl border border-emerald-500/20 flex flex-col backdrop-blur-sm shadow-lg">
+                    <div class="flex items-center gap-4 mb-4"><div class="p-3 bg-emerald-500/10 rounded-xl"><i data-lucide="clock" class="w-6 h-6 text-emerald-400"></i></div><h3 class="text-2xl font-bold text-white">Clock</h3></div>
+                    <div class="mb-5 rounded-xl border border-white/5 bg-black"><img src="Img/2.2 Clock.png" class="w-full h-40 object-cover opacity-80"></div>
+                    <p class="text-slate-300 mb-4 flex-grow">Always stay on time. You can use local time or different time zones. <br><br>
+                         <i>Note: You can choose which timezone to use directly while inserting the widget.</i></p>
+                </div>
+
+                <div class="bg-slate-900/60 p-6 rounded-3xl border border-amber-500/20 flex flex-col backdrop-blur-sm shadow-lg">
+                    <div class="flex items-center gap-4 mb-4"><div class="p-3 bg-amber-500/10 rounded-xl"><i data-lucide="cloud-sun" class="w-6 h-6 text-amber-400"></i></div><h3 class="text-2xl font-bold text-white">Weather</h3></div>
+                    <div class="mb-5 rounded-xl border border-white/5 bg-black"><img src="Img/2.3 Weather.png" class="w-full h-40 object-cover opacity-80"></div>
+                    <p class="text-slate-300 mb-4 flex-grow">Real-time local forecasts and current temperature. <br><br>
+                        <i>Note: Shard uses the Open-Meteo API for weather forecasts. When you insert a widget, the location is automatically set to "local" and you will be asked to authorize access to your location so you can view the weather based on your current location. To change the location to a default city, such as 'Rome,' simply go to Settings < Widget < Weather < Position and select manual city. It may take up to a few dozen seconds for the widget to load after insertion. Once inserted, the widget should function without any issues. Don't forget to save your changes using the dedicated button at the bottom right of the settings!</i></p>
+                </div>
+
+                <div class="bg-slate-900/60 p-6 rounded-3xl border border-rose-500/20 flex flex-col backdrop-blur-sm shadow-lg">
+                    <div class="flex items-center gap-4 mb-4"><div class="p-3 bg-rose-500/10 rounded-xl"><i data-lucide="list-todo" class="w-6 h-6 text-rose-400"></i></div><h3 class="text-2xl font-bold text-white">To-Do List</h3></div>
+                    <div class="mb-5 rounded-xl border border-white/5 bg-black"><img src="Img/2.4 To do list.png" class="w-full h-40 object-cover opacity-80"></div>
+                    <p class="text-slate-300 mb-4 flex-grow">Manage your daily tasks directly from your home page. <br> <br> <i>Note: If you don't want to see the 'X' or choose whether to display the task creation date, simply go to Settings < Widget To-Do List and choose 'yes' or 'no' for 'Show "✕" button (Quick Delete)' and 'Show Task Added Date'. Don't forget to save your changes using the dedicated button at the bottom right of the settings! </i></Widget></p>
+                </div>
+           
+                <div class="bg-slate-900/60 p-6 rounded-3xl border border-red-500/20 flex flex-col backdrop-blur-sm shadow-lg">
+                    <div class="flex items-center gap-4 mb-4"><div class="p-3 bg-red-500/10 rounded-xl"><i data-lucide="battery-charging" class="w-6 h-6 text-red-400"></i></div><h3 class="text-2xl font-bold text-white">Battery</h3></div>
+                    <div class="mb-5 rounded-xl border border-white/5 bg-black"><img src="Img/2.5 Battery.png" class="w-full h-40 object-cover opacity-80"></div>
+                    <p class="text-slate-300 mb-4 flex-grow">Monitor the status and charge percentage of your PC directly from the browser. On desktop computers, it will always show as 100% charged.</p>
+                </div>
+
+                <div class="bg-slate-900/60 p-6 rounded-3xl border border-pink-500/20 flex flex-col backdrop-blur-sm shadow-lg">
+                    <div class="flex items-center gap-4 mb-4"><div class="p-3 bg-pink-500/10 rounded-xl"><i data-lucide="sticky-note" class="w-6 h-6 text-pink-400"></i></div><h3 class="text-2xl font-bold text-white">Notes</h3></div>
+                    <div class="mb-5 rounded-xl border border-white/5 bg-black"><img src="Img/2.6 Notes.png" class="w-full h-40 object-cover opacity-80"></div>
+                    <p class="text-slate-300 mb-4 flex-grow">It saves automatically and instantly. You don't need to be in 'edit' mode to write on a note. <br> <br> <i> Note: To choose the font of the notes or the text size, go to Settings < Widget < Notes. Don't forget to save your changes using the dedicated button at the bottom right of the settings! </i></p>
+                </div>
+
+                <div class="bg-slate-900/60 p-6 rounded-3xl border border-indigo-500/20 flex flex-col backdrop-blur-sm shadow-lg">
+                <div class="flex items-center gap-4 mb-4"><div class="p-3 bg-indigo-500/10 rounded-xl"><i data-lucide="music" class="w-6 h-6 text-indigo-400"></i></div><h3 class="text-2xl font-bold text-white">Spotify</h3></div>
+                <div class="mb-5 rounded-xl border border-white/5 bg-black"><img src="Img/2.7 Spotify.png" class="w-full h-40 object-cover opacity-80"></div>
+                <p class="text-slate-300 mb-4 flex-grow">Music lover? Add a track, a playlist, an album, or a podcast directly to SHARD. If you experience any issues, check the FAQ section. <br><br>
+                    <i>Note: Spotify widgets come in standard sizes, and therefore, resizing them might cause display issues with the information. To listen to full tracks and podcasts, make sure you have a Spotify account and are logged in at open.spotify.com. The link to insert is the one you can get by clicking 'share' on an album, song, or playlist.</i></p>
+                </div>
+                
+            </div>
+        </div>
+             <!-- troubleshooting -->  
+       <div id="page-troubleshooting" class="page-view page-hidden max-w-4xl mx-auto p-6 lg:p-12">
+            <div class="text-center mb-12">
+                <div class="inline-block p-4 bg-orange-500/10 rounded-2xl mb-4 border border-orange-500/20">
+                    <i data-lucide="wrench" class="w-12 h-12 text-orange-400 mx-auto"></i>
+                </div>
+                <h1 class="text-4xl font-black text-white mb-4">Troubleshooting Center <br><span class="text-2xl text-orange-400">(Q&A and FAQ)</span></h1>
+                <p class="text-lg text-slate-400 mt-6 leading-relaxed">Welcome to the SHARD diagnostic section. Since SHARD actively manipulates web page code and your browser's network policies, you might encounter unexpected behaviors. Find your issue below to discover exactly what happens "under the hood" and how to fix it.</p>
+            </div>
+
+            <div class="space-y-12">
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-slate-700 pb-2">1. Installation and Startup</h2>
+                    <div class="space-y-4">
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                <span>Chrome keeps asking me to "Disable developer mode extensions" at every startup. What should I do?</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>This is standard security behavior for Google Chrome (and Edge) to warn you that you are using an "unpacked" extension. Unfortunately, until SHARD is officially published on the Chrome Web Store, this warning will appear. Simply click the "X" to close it and continue using your dashboard.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                <span>(Enterprise/School Users) Chrome prevents me from installing SHARD, saying it is "Blocked by the administrator".</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>Devices managed by corporate or school policies (Google Workspace Education/Enterprise) often completely disable Developer Mode or the installation of extensions outside the Web Store. There is no technical bypass for this: you must ask your IT administrator for permission, switch Chrome profiles, or log in with another personal email.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                <span>I loaded the folder but I get a "Loading error" (Error loading extension) in the extensions panel.</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>Make sure you have selected the exact folder containing the <code class="bg-slate-800 px-1 rounded text-sm text-cyan-300">manifest.json</code> file. If you extracted the .zip file into a folder that contains another folder inside it (e.g., shard_v3/shard_v3/manifest.json), you must select the innermost one. Check that you haven't deleted any files inside it.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                <span>The Ctrl + Click combination to capture data doesn't work on some pages.</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8 space-y-2">
+                                <p>There are two possible causes:</p>
+                                <ul class="list-disc pl-5">
+                                    <li><strong>System Pages:</strong> Chrome strictly forbids the execution of scripts (content.js) on internal pages (like chrome://settings) and the Chrome Web Store. On these sites, SHARD is disabled by default.</li>
+                                    <li><strong>Highly Protected Sites:</strong> Some complex websites fiercely intercept mouse clicks (using <code>stopPropagation</code> in Javascript) for their own internal functions, blocking our detector. If this operation doesn't work on any site at all, try changing your browser's privacy settings or switch it (see supported browsers).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-slate-700 pb-2">2. "Shards" (Live Data)</h2>
+                    <div class="space-y-4">
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
+                                <span>My Shard shows "Not found" (in orange). What does it mean?</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>The CSS selector you saved no longer matches any element on the original page. Websites are updated by their developers, changing the HTML structure. <strong class="text-yellow-300">Solution:</strong> Close the Shard in edit mode, go back to the original site, and repeat the capture procedure (Ctrl + Click).</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i>
+                                <span>My Shard shows "Network err." (in red).</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>The background engine of SHARD (background.js) cannot contact the server of the original site. Possible causes: You are offline, the source website is temporarily unreachable, or the site has implemented anti-bot or anti-scraping blocks that reject repeated requests.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i>
+                                <span>My Shard shows "Syntax err." (in red).</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>The saved textual "path" (CSS Selector) is corrupted and contains invalid characters. Delete and recreate the widget.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                <span>I captured data from a dynamic website (e.g., a SPA in React/Vue), but the Shard appears empty!</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p><strong>Advanced technical issue:</strong> SHARD downloads the raw HTML code of the site in the background to read your data. However, some modern sites load texts using Javascript <em>after</em> the page opens. Since SHARD's background extraction doesn't execute Javascript for performance reasons, the data appears empty.<br><strong class="text-cyan-300">Solution:</strong> SHARD works perfectly on server-side rendered sites (Wikipedia, Amazon, many stock/news sites), but struggles with pure web apps. In these cases, we recommend including the entire page as a "Portal (Website)".</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                <span>I captured data from my bank account, or my followers on a private dashboard, but the Shard returns "Sign in to continue".</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>Although SHARD's background fetch calls attempt to include your session cookies, some sites use extra security measures (CSRF Tokens, SameSite=Strict cookies) that prevent data reading if you don't have the tab physically open.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-slate-700 pb-2">3. Portals (Full Web Pages / Iframes)</h2>
+                    <div class="space-y-4">
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5"></i>
+                                <span>Why do some sites like Netflix, banks, or Github refuse to load inside a "WEBSITE" Portal?</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>SHARD uses advanced rules (declarativeNetRequest) to tear down walls like x-frame-options and content-security-policy that normally block sites from being included in iframes. However, ultra-secure sites use "Framebusting Javascript": internal scripts that realize they are in a SHARD window and force a blank page. This cannot be bypassed for obvious banking/DRM security reasons.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5"></i>
+                                <span>I click a link inside a Portal, but instead of navigating within the portal, a new tab opens. Why?</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>Many developers insert <code>target="_blank"</code> into their links, which forces opening in a new tab. Unfortunately, if it's in the site's original code, SHARD must respect it.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5"></i>
+                                <span>In a Portal, I try to log in but I keep getting kicked out or it says "Cookies disabled".</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>If you have set Chrome to "Block third-party cookies" (in the browser's privacy settings), Chrome will consider the site inside the Portal as a "third party" and prevent it from saving the login. You must allow third-party cookies for logins to work in portals.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-slate-700 pb-2">4. Built-in Widgets</h2>
+                    <div class="space-y-4">
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
+                                <span>The Spotify Widget only plays 30 seconds of the song!</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>This happens if you haven't logged into the Spotify web player, or if you have a free account. Make sure to open open.spotify.com in a regular tab and log in.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
+                                <span>The Weather Widget can't find my city or shows the wrong temperature.</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>Be specific with your formatting! Type "Rome, IT" or "Paris, FR". If you leave it in Automatic mode and are using a VPN, the weather will show the city of your VPN server, not your real location.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
+                                <span>The clock shows the wrong time or I want to set a different time zone, but it doesn't work.</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>If you enter the time zone manually, you must use the IANA Time Zone format (e.g., America/New_York, Europe/Rome, Asia/Tokyo). If you leave it on "local", it will draw from your operating system's clock; make sure your Windows/Mac time is correctly synchronized with the Internet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-slate-700 pb-2">5. Workspace, Layout, and Saving</h2>
+                    <div class="space-y-4">
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-pink-400 flex-shrink-0 mt-0.5"></i>
+                                <span>I lost all my Shards, my To-Do list, and my Notes! What happened?</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>SHARD saves the entire ecosystem in <code class="bg-slate-800 px-1 rounded">chrome.storage.local</code> to guarantee maximum privacy (no data goes to external servers). If you cleared Chrome's "Cached images and files" or "Cookies and other site data", or used aggressive cleaning programs like CCleaner, you also wiped out SHARD's database. Always perform regular backups (Export)!</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-pink-400 flex-shrink-0 mt-0.5"></i>
+                                <span>When I try to restore my backup file (.json), I receive the message: "The file is not a valid Shard OS backup".</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8 space-y-2">
+                                <p>This happens if:</p>
+                                <ul class="list-disc pl-5">
+                                    <li>You tried to import a file that was not generated by SHARD.</li>
+                                    <li>You opened the .json file with a text editor and accidentally inserted spaces, deleted commas, or corrupted the JSON structure. If you need to edit the backup manually, verify that the formatting is intact using an online JSON validator.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-pink-400 flex-shrink-0 mt-0.5"></i>
+                                <span>I added a custom background image via URL, but the background remained black.</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>The image you chose is probably hosted on a server that blocks Hotlinking (CORS - Cross-Origin Resource Sharing). The browser refuses to download it. <strong class="text-pink-300">Solution:</strong> Use a direct link to an image hosted on services like Imgur, GitHub, or Unsplash.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-pink-400 flex-shrink-0 mt-0.5"></i>
+                                <span>My widgets ended up "off" the screen and I can no longer drag them!</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>This can happen if you drastically resized the Chrome window (for example, switching from a 4K monitor to a small laptop screen). <strong class="text-pink-300">Solution:</strong> Activate "Edit Mode" in the top right. This often allows you to reattach them to the borders. If the widget is totally lost in the void, delete it from the settings menu or, in the worst case, restore a previous backup.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 border border-white/5 p-6 rounded-2xl hover:bg-slate-900 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-start gap-3">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-pink-400 flex-shrink-0 mt-0.5"></i>
+                                <span>Does SHARD slow down my computer or make my laptop overheat?</span>
+                            </h3>
+                            <div class="text-slate-400 pl-8">
+                                <p>It depends on your layout. SHARD itself is very lightweight (Zero frameworks, pure Vanilla JS). However, if you add 10 Portals (Websites) that simultaneously load 10 heavy sites (like real-time TradingView charts or autoplaying videos), it's like having 10 Chrome tabs open simultaneously. <strong class="text-pink-300">Tip:</strong> Use Portals sparingly and take advantage of "Live Data (Shards)" to extract only essential texts: they require on average 0.1% of the power of a full portal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Privacy -->  
+        <div id="page-privacy" class="page-view page-hidden max-w-4xl mx-auto p-6 lg:p-12">
+            <div class="bg-slate-900/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-12">
+                <div class="flex justify-center mb-8">
+                    <div class="p-5 bg-white/5 rounded-full border border-white/10">
+                        <i data-lucide="shield-check" class="w-16 h-16 text-emerald-400"></i>
+                    </div>
+                </div>
+                <h1 class="text-4xl font-black text-white text-center mb-10">Privacy & Security</h1>
+                <div class="prose prose-invert max-w-none text-slate-300">
+                    <p class="text-xl text-center mb-12 font-light text-slate-400">SHARD was built with an absolute "Privacy-First" philosophy.</p>
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-3 flex items-center gap-2"><i data-lucide="hard-drive" class="w-6 h-6 text-cyan-400"></i> 1. No External Servers</h3>
+                            <p>Everything you do in SHARD stays on your computer. The extension does not have any cloud databases.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-3 flex items-center gap-2"><i data-lucide="eye-off" class="w-6 h-6 text-cyan-400"></i> 2. No Tracking</h3>
+                            <p>Only an analytics system (Google) is integrated to provide the developer with data regarding SHARD's usage. External connections are only made to Weather APIs, Search, and the sites you add yourself.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-3 flex items-center gap-2"><i data-lucide="code" class="w-6 h-6 text-cyan-400"></i> 3. Open/Transparent Code</h3>
+                            <p>You can open and inspect any JavaScript file to verify the absence of malicious code.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-3 flex items-center gap-2"><i data-lucide="shield-check" class="w-6 h-6 text-cyan-400"></i> 4. Privacy Policies</h3>
+                            <p>You can read the full privacy policy 
+                                <span data-target="page-privacy-policies" class="nav-link text-cyan-400 hover:text-cyan-300 underline cursor-pointer transition-colors">
+                                    here.
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Requisiti -->  
+        <div id="page-requisiti" class="page-view page-hidden max-w-4xl mx-auto p-6 lg:p-12">
+            <div class="mb-12">
+                <h1 class="text-4xl font-black text-white mb-4">System Requirements</h1>
+                <p class="text-xl text-slate-400">What you need to run SHARD smoothly:</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-slate-900/60 p-8 rounded-3xl border border-white/5 backdrop-blur-sm">
+                    <i data-lucide="app-window" class="w-10 h-10 text-cyan-400 mb-6"></i>
+                    <h3 class="text-xl font-bold text-white mb-4">Supported Browsers</h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i> Google Chrome (Recommended)</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i> Microsoft Edge</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i> Brave Browser</li>
+                        <li class="flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-yellow-400"></i> Any Chromium-based browser with support for <strong>Manifest V3</strong></li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-900/60 p-8 rounded-3xl border border-white/5 backdrop-blur-sm">
+                    <i data-lucide="cpu" class="w-10 h-10 text-purple-400 mb-6"></i>
+                    <h3 class="text-xl font-bold text-white mb-4">Hardware</h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-center gap-2"><i data-lucide="monitor" class="w-4 h-4 text-slate-400"></i> Optimized for 1920x1080 or higher. SHARD also supports smaller screens, but <strong>the style and dimensions may be altered</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="memory-stick" class="w-4 h-4 text-slate-400"></i> Minimum: 4GB RAM</li>
+                        <li class="flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-yellow-400"></i> Recommended: 8GB+ RAM (for intensive use of multiple Portals)</li>
+                        <li class="flex items-center gap-2"><i data-lucide="mouse" class="w-4 h-4 text-slate-400"></i> Mouse/Trackpad (required for Edit Mode). It is not possible to use all features on Touch Screen devices.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Io -->  
+        <div id="page-lorenzou" class="page-view page-hidden max-w-4xl mx-auto p-6 lg:p-12">
+            <div class="relative rounded-3xl overflow-hidden bg-slate-900 border border-white/10 p-8 md:p-16 text-center shadow-2xl">
+                
+                <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-purple-900/20 opacity-50"></div>
+                
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="w-32 h-32 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-1 mb-6 shadow-[0_0_30px_rgba(0,243,255,0.3)]">
+                        <div class="w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
+                            <img 
+                                src="Img/8.1.png" 
+                                alt="Foto Profilo" 
+                                class="w-full h-full object-cover rounded-full"
+                            />
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">Lorenzo U.</h1>
+                    <p class="text-cyan-400 font-mono tracking-widest text-sm mb-8 uppercase">Creator & Developer</p>
+                    
+                    <div class="max-w-2xl mx-auto text-slate-300 leading-relaxed space-y-4">
+                        <p class="text-left">
+                          <br>
+                            Hi! I'm Lorenzo, <br><br>
+                            I'm almost 16 and, I imagine just like you if you're reading this page, I spend most of my time with an open code editor or a running 3D printer. I love designing, building, and solving problems. If you're a junior dev or a maker and you've been waiting for it, here is my stack and what I do: <br><br>
+                            <strong>Code & AI</strong>: I mostly develop for the web (HTML, CSS, JS, PHP, SQL). Lately, I've been having fun integrating LLM APIs and building AI bots for my projects. Beyond the web world, I also work on apps for the Apple ecosystem. A few years ago, I learned Swift (I'm currently a certified Apple Teacher).<br><br>
+                            <strong>3D Printing</strong>: In the past few years, I've learned how to model in Blender, Shapr3D and Tinkercad, how to slice with Cura, and, at the end, I print everything on WASP or BambuLab machines at my school. <br><br>
+                            <strong>Teaching & Robotics</strong>: I believe that if you know how to do something, you should also know how to explain it. That's why I've been teaching coding (mostly Swift) and robotics for two years now to younger kids at my old middle school. On the robotics side, I teach everything from the simpler Lego WeDo (for first-year students) up to COMAU industrial robotic arms (with the older kids). <br><br>
+                            <strong>My Vision</strong>: Technology is meant to solve real problems, not just to make cool things. My approach is simple: analyze the problem, write, test, read the logs (lots of error logs), fix, and try again. You always improve, one commit at a time. <br><br>
+                            If you're also always hunting for new projects or debugging something, you know what I'm talking about! 🛠️ <br><br>
+                            While you're reading this page, I'm probably writing a new project, the 3D printer has just started printing a part of one future project, or maybe I'm trying to figure out why my code just stopped working (there were no bug 5 minutes ago). The world is full of bugs, but someone has to fix them, right? <br><br>
+                            Let's see you in the code.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       <div id="page-ringraziamenti" class="page-view page-hidden max-w-4xl mx-auto p-6 lg:p-12">
+            <h1 class="text-4xl font-black text-white mb-12 text-center">Acknowledgements</h1>
+            
+            <div class="space-y-6 max-w-2xl mx-auto">
+                <div class="bg-gradient-to-r from-red-500/10 to-transparent border-l-4 border-red-500 p-6 rounded-r-2xl backdrop-blur-sm">
+                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="flame" class="w-5 h-5 text-red-500"></i> Hack Club & Flavourtown
+                    </h3>
+                    <p class="text-slate-300">A special thanks to <strong>Hack Club</strong> and the <em>Flavourtown</em> competition, which provided the initial inspiration and the drive to push the limits of browser extension capabilities.</p>
+                </div>
+                
+                <div class="bg-gradient-to-r from-cyan-500/10 to-transparent border-l-4 border-cyan-500 p-6 rounded-r-2xl backdrop-blur-sm">
+                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="code-2" class="w-5 h-5 text-cyan-500"></i> Open Source Community
+                    </h3>
+                    <p class="text-slate-300">SHARD wouldn't exist without the Open Source community. Thanks to the maintainers of public APIs (like Open-Meteo for free and trackless weather data) and to the creators of the Lucide icons used in this dashboard.</p>
+                </div>
+
+                <div class="bg-gradient-to-r from-yellow-500/10 to-transparent border-l-4 border-yellow-500 p-6 rounded-r-2xl backdrop-blur-sm">
+                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="code-2" class="w-5 h-5 text-yellow-500"></i> Friends and Family
+                    </h3>
+                    <p class="text-slate-300">A special thanks to my parents for supporting (and putting up with) me while I built all my projects, and this one in particular; to my brother for his constructive criticism (even if his goal is always just to criticize :); and last but not least, my friends and classmates who tested every single change to Shard and put up with listening to me talk about it on loop for the last 3 months.</p>
+                </div>
+
+                <div class="bg-gradient-to-r from-purple-500/10 to-transparent border-l-4 border-purple-500 p-6 rounded-r-2xl backdrop-blur-sm">
+                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="users" class="w-5 h-5 text-purple-500"></i> Beta Testers
+                    </h3>
+                    <p class="text-slate-300"><strong>TO YOU!</strong> and all the geeks and hackers who are trying out SHARD, putting up with the bugs, and providing crucial feedback to make Shard the system I've always dreamed it would be.
+                    </p>
+                </div>
+            </div>
+        </div>
+     <!-- Privacy polices hidden -->  
+        <div id="page-privacy-policies" class="page-view page-hidden max-w-5xl mx-auto p-6 lg:p-12">
+    <div class="space-y-12">
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">Privacy Policy & Terms of Service</h1>
+            <p class="text-xl text-slate-400">Effective Date / Last Updated: <span class="text-cyan-400 font-medium">April 3, 2026</span></p>
+        </header>
+
+        <div class="prose prose-invert max-w-none text-slate-300 text-lg leading-relaxed">
+            <p>Please read this document ("Agreement") carefully before downloading, installing, or using the browser extension named "Shard" ("Software", "Extension"). This Agreement constitutes a legally binding contract between the end-user ("User", "You") and the independent developer of the Software ("Developer", "We", "Us").</p>
+            
+            <div class="bg-yellow-500/10 border border-yellow-500/20 text-yellow-200 p-6 rounded-2xl my-8 flex gap-4 shadow-[0_0_15px_rgba(234,179,8,0.1)]">
+                <i data-lucide="alert-triangle" class="w-8 h-8 flex-shrink-0 text-yellow-500 mt-1"></i>
+                <div class="text-sm md:text-base font-bold uppercase tracking-wide leading-relaxed">
+                    INSTALLATION, ACTIVATION IN "DEVELOPER MODE," AND USE OF THE SOFTWARE CONSTITUTE UNCONDITIONAL AND COMPLETE ACCEPTANCE OF ALL TERMS, CONDITIONS, PRIVACY POLICIES, AND LIMITATIONS OF LIABILITY DESCRIBED HEREIN. If the User does not agree to these terms, they must immediately stop the installation and remove any files associated with the Software from their device.
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold text-white mb-6 border-b border-white/10 pb-4 flex items-center gap-3">
+                <i data-lucide="shield-check" class="text-cyan-400 w-8 h-8"></i> 
+                PART I: PRIVACY POLICY AND DATA PROCESSING
+            </h2>
+            <p class="text-xl text-slate-300 font-light mb-8">The protection of the User's privacy is a founding principle of Shard's architecture. The Software is designed to operate strictly on a client-side logic, ensuring that data remains the exclusive property and under the full control of the User.</p>
+            
+            <div class="space-y-6">
+                <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4">1.1 Absence of Proprietary Servers and Strictly Local Storage</h3>
+                    <p class="text-slate-400 mb-4">The Developer does not own, manage, or rent any servers, databases, cloud infrastructure, or telemetry systems designed to receive data generated by the Extension. All information processed by Shard is stored exclusively locally on the User's device, utilizing the browser's native and standardized storage APIs (<code class="bg-slate-950 px-2 py-1 rounded text-cyan-300 font-mono text-sm border border-white/10">chrome.storage.local</code>).</p>
+                    <p class="text-slate-400 mb-4 font-semibold">Locally stored data includes, but is not limited to:</p>
+                    <ul class="space-y-3 text-slate-300 mb-6 pl-2">
+                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> <span><strong>User-Generated Content:</strong> Texts entered into "Notes" widgets, task lists ("To-Do lists"), search preferences, and time zones.</span></li>
+                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> <span><strong>Network and Browsing Configurations:</strong> URLs provided by the User for embedding within the "Portals" function, links to media streaming services (e.g., Spotify).</span></li>
+                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> <span><strong>Structural Data (Shard Function):</strong> Source URLs, CSS selectors (DOM paths), and text snippets extracted from web pages designated by the User for real-time monitoring.</span></li>
+                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> <span><strong>Interface Preferences:</strong> Spatial coordinates of widgets (X and Y axes), dimensions (width and height), layout options, themes, and backgrounds.</span></li>
+                    </ul>
+                    <div class="bg-cyan-500/10 text-cyan-300 p-4 rounded-xl border border-cyan-500/20 font-medium">
+                        None of the aforementioned information is in any way transmitted, collected, intercepted, analyzed, monetized, or sold to third parties by the Developer.
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl relative overflow-hidden hover:border-cyan-500/30 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4">1.2 Network Interactions with Third-Party Services</h3>
+                    <p class="text-slate-400 mb-4">To perform its essential functions, the Software generates outbound network requests directly from the User's browser to third-party infrastructures. The Developer does not act as an intermediary in these communications:</p>
+                    <ul class="space-y-3 text-slate-300 mb-6 pl-2">
+                        <li class="flex items-start gap-3"><i data-lucide="globe" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> <span><strong>Background Updating (Data Fetching):</strong> The background service (<code class="bg-slate-950 px-2 py-1 rounded text-cyan-300 font-mono text-sm border border-white/10">background.js</code>) makes HTTP/HTTPS calls to the URLs saved by the User to extract and update snippet data (Shards) in real-time, bypassing the local cache.</span></li>
+                        <li class="flex items-start gap-3"><i data-lucide="layout-template" class="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0"></i> <span><strong>Iframe Embedding (Portals):</strong> The display of external websites or multimedia widgets within the dashboard involves direct communication between the User's browser and the servers hosting those services.</span></li>
+                    </ul>
+                    <p class="text-slate-400 text-sm italic">The User acknowledges that these interactions are subject exclusively to the Privacy Policies and Terms of Service of the respective destination websites.</p>
+                </div>
+
+                <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl relative overflow-hidden hover:border-cyan-500/30 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4">1.3 Data Management, Export, and Deletion</h3>
+                    <p class="text-slate-400">The User retains exclusive control over their data. The Software provides built-in tools for the manual export (in JSON format) of the entire configuration for backup purposes. Data deletion can be done selectively via the user interface (removing individual widgets/portals) or permanently by uninstalling the Extension from the browser, an action that will permanently purge the local database.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold text-white mb-6 border-b border-white/10 pb-4 flex items-center gap-3 mt-16">
+                <i data-lucide="file-text" class="text-purple-400 w-8 h-8"></i> 
+                PART II: LICENSE AGREEMENT, TECHNICAL PERMISSIONS, AND LIMITATIONS OF LIABILITY
+            </h2>
+            <p class="text-xl text-slate-300 font-light mb-8">As Shard is an advanced utility tool that actively modifies browser rendering behavior and security policies for customization purposes, its use requires an explicit assumption of responsibility by the User.</p>
+            
+            <div class="space-y-6">
+                <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl hover:border-purple-500/30 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4">2.1 System Authorizations and Permissions</h3>
+                    <p class="text-slate-400 mb-6">The Software requires the acceptance of sensitive permissions during installation. The User consents to the use of these permissions, the technical necessity of which is explained below:</p>
+                    <div class="grid gap-4">
+                        <div class="bg-white/[0.02] p-4 rounded-xl border border-white/5 flex gap-4 items-center">
+                            <code class="bg-slate-950 px-3 py-1.5 rounded text-purple-300 font-mono text-sm border border-purple-500/30 flex-shrink-0">storage</code>
+                            <span class="text-slate-400 text-sm">Necessary for the implementation of the local database described above.</span>
+                        </div>
+                        <div class="bg-white/[0.02] p-4 rounded-xl border border-white/5 flex gap-4 items-center">
+                            <code class="bg-slate-950 px-3 py-1.5 rounded text-purple-300 font-mono text-sm border border-purple-500/30 flex-shrink-0">activeTab & scripting</code>
+                            <span class="text-slate-400 text-sm">Required to inject the scripts necessary to identify the CSS paths of elements selected by the User during active browsing, in order to configure data extraction (Shard function).</span>
+                        </div>
+                        <div class="bg-white/[0.02] p-4 rounded-xl border border-white/5 flex gap-4 items-center">
+                            <code class="bg-slate-950 px-3 py-1.5 rounded text-purple-300 font-mono text-sm border border-purple-500/30 flex-shrink-0">host_permissions</code>
+                            <span class="text-slate-400 text-sm">Essential global authorization to allow asynchronous data retrieval (fetch) from any domain specified by the User, as well as to enable the embedding of any web page within the dashboard.</span>
+                        </div>
+                        <div class="bg-white/[0.02] p-4 rounded-xl border border-white/5 flex gap-4 items-center">
+                            <code class="bg-slate-950 px-3 py-1.5 rounded text-purple-300 font-mono text-sm border border-purple-500/30 flex-shrink-0">declarativeNetRequest</code>
+                            <span class="text-slate-400 text-sm">Critical permissions used by the Extension to dynamically intercept and mutate HTTP response headers (removal of X-Frame-Options and CSP). Indispensable to allow the embedding (framing) of websites.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl hover:border-purple-500/30 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4">2.2 Technological Disclaimer and Limitation of Liability</h3>
+                    <p class="text-slate-400 mb-4 uppercase text-sm font-bold tracking-wide">THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.</p>
+                    <p class="text-slate-400 mb-4">To the maximum extent permitted by applicable jurisdiction, the Developer disclaims all warranties regarding merchantability, fitness for a particular purpose, or non-infringement of third-party rights. The Developer does not guarantee in any way:</p>
+                    <ul class="space-y-2 text-slate-400 pl-4 list-disc marker:text-slate-600">
+                        <li>The absence of bugs, fatal errors, slowdowns, or conflicts with other extensions or software operating on the User's device.</li>
+                        <li>The stability, persistence, or integrity of saved data. The User is solely responsible for performing regular backups via the export function. The Developer shall not be liable for any data loss.</li>
+                        <li>The continued functionality of third-party dependent features (e.g., structural DOM changes by monitored websites that render CSS selectors obsolete).</li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl hover:border-purple-500/30 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4">2.3 Improper Use, Legal Responsibility, and Violation of Third-Party Terms</h3>
+                    <p class="text-slate-400 mb-4">The User acknowledges and accepts that the function of altering security headers is a powerful tool designed strictly for personal use and in controlled environments.</p>
+                    <ul class="space-y-4 text-slate-300">
+                        <li class="bg-white/[0.02] p-4 rounded-xl border border-white/5">
+                            <strong class="text-white block mb-1 text-red-400">Security Risks (Clickjacking and Vulnerabilities):</strong> 
+                            <span class="text-slate-400 text-sm">By voluntarily removing the anti-framing protections of third-party sites to view them in their dashboard, the User knowingly exposes themselves to potential cybersecurity risks. The Developer is explicitly released from any liability.</span>
+                        </li>
+                        <li class="bg-white/[0.02] p-4 rounded-xl border border-white/5">
+                            <strong class="text-white block mb-1">Violation of Terms of Service (TOS):</strong> 
+                            <span class="text-slate-400 text-sm">Embedding certain websites, bypassing their security limitations, or automated and continuous data extraction (scraping) may constitute a direct violation of the Terms of Service of those websites. The User assumes total, exclusive, and unconditional responsibility for the use of such features.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl hover:border-purple-500/30 transition-colors">
+                        <h3 class="text-xl font-bold text-white mb-3">2.4 External Distribution & "Developer Mode"</h3>
+                        <p class="text-slate-400 text-sm">The User acknowledges that the Software is not distributed through the official Google Chrome Web Store. By proceeding with Sideloading, the User fully understands the inherent risks and releases the Developer and Google LLC from any liability.</p>
+                    </div>
+                    
+                    <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl hover:border-purple-500/30 transition-colors">
+                        <h3 class="text-xl font-bold text-white mb-3">2.5 Indemnification</h3>
+                        <p class="text-slate-400 text-sm">The User agrees to indemnify, defend, and hold harmless the Developer from any claim, lawsuit, damage, or expense brought by third parties arising out of the User's non-compliant use of the Software or violation of third-party rights.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-white/5 p-8 rounded-3xl hover:border-purple-500/30 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4">2.6 Documentation, Updates, and Support</h3>
+                    <p class="text-slate-400 mb-4">This software is provided alongside its Official Guide (included in the package files as <code class="text-purple-300">guide.html</code>). The User is required to consult the documentation for correct instructions regarding manual installation procedures, updates, use of features, and data export.</p>
+                    <p class="text-slate-400">For technical support, bug reports, or inquiries relating to this Policy, the User must exclusively refer to the official contact channels explicitly indicated within the Guide. The Developer reserves the right, but not the obligation, to provide updates or technical support.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!-- Contatti -->  
+
+    <div id="page-contatti" class="page-view page-hidden max-w-5xl mx-auto p-6 lg:p-12">
+    <iframe
+      id="JotFormIFrame-260816159792063" allowtransparency="true" allowfullscreen="true" src="https://form.jotform.com/260816159792063" frameborder="0" style="width: 100%; min-height: 800px; border:none;" scrolling="yes"
+    >
+    </iframe> 
+    </div>
+
+     <!-- Dev notes -->  
+
+    <div id="page-dev-notes" class="page-view page-hidden max-w-5xl mx-auto p-6 lg:p-12">
+            <h1 class="text-4xl font-black text-white mb-4">Technical Documentation & Architecture <span class="text-slate-500 text-2xl font-normal">(Developer Notes)</span></h1>
+            <p class="text-xl text-slate-400 mb-12">This section is dedicated to developers and geeks who want to explore SHARD's source code. Here we analyze the technical architecture, implemented security bypasses, and design choices that allow SHARD to function as a web-based operating system.</p>
+
+            <div class="space-y-12">
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-cyan-500 shadow-[0_0_20px_#00f3ff]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-cyan-500/10 rounded-xl"><i data-lucide="box" class="w-8 h-8 text-cyan-400"></i></div>
+                        <h2 class="text-2xl font-bold text-white">1. Base Architecture (Manifest V3)</h2>
+                    </div>
+                    <div class="text-slate-300 space-y-4">
+                        <p>SHARD is built entirely on the Google Chrome <strong>Manifest V3</strong> specifications. This required abandoning the old persistent background pages in favor of Service Workers (<code class="text-cyan-200 bg-cyan-900/30 px-1 rounded">background.js</code>).</p>
+                        <p>The core permissions required in <code class="text-cyan-200 bg-cyan-900/30 px-1 rounded">manifest.json</code> are:</p>
+                        <ul class="space-y-2 ml-4">
+                            <li class="flex items-start gap-3"><i data-lucide="chevron-right" class="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5"></i> <span><strong class="text-white">storage:</strong> For layout persistence in the local state (<code class="text-slate-400">chrome.storage.local</code>).</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="chevron-right" class="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5"></i> <span><strong class="text-white">activeTab & scripting:</strong> To inject scripts on-demand into specific pages, when necessary.</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="chevron-right" class="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5"></i> <span><strong class="text-white">declarativeNetRequest & declarativeNetRequestWithHostAccess:</strong> The beating heart of the "Portals" system, necessary to intercept and modify HTTP network headers.</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="chevron-right" class="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5"></i> <span><strong class="text-white"><all_urls> (Host Permissions):</strong> Fundamental for the content script and to allow the background worker to make <code class="text-slate-400">fetch()</code> calls to any domain without encountering CORS blocks.</span></li>
+                        </ul>
+                        <p class="pt-2">The extension overwrites the default page using the directive: <br><code class="text-cyan-200 bg-cyan-900/30 px-2 py-1 rounded block mt-2">"chrome_url_overrides": { "newtab": "dashboard.html" }</code></p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-purple-500 shadow-[0_0_20px_#a855f7]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-purple-500/10 rounded-xl"><i data-lucide="file-code-2" class="w-8 h-8 text-purple-400"></i></div>
+                        <h2 class="text-2xl font-bold text-white">2. Injection and DOM Parsing (content.js)</h2>
+                    </div>
+                    <div class="text-slate-300 space-y-6">
+                        <p>The <code class="text-purple-200 bg-purple-900/30 px-1 rounded">content.js</code> file is automatically injected into all web pages (matches: <code class="text-slate-400">["<all_urls>"]</code>). Its task is to transform the user's cursor into a visual scraping tool.</p>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-2">Event Detection</h3>
+                            <p class="text-slate-400">The script listens to the <code class="text-slate-300">document</code> object to intercept clicks. If it detects that the Ctrl or Meta (Mac) key is pressed during the click (<code class="text-slate-300">e.ctrlKey || e.metaKey</code>), it blocks the browser's default behavior with <code class="text-slate-300">e.preventDefault()</code> and <code class="text-slate-300">e.stopPropagation()</code>.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-2">CSS Generation Algorithm (getCssPath)</h3>
+                            <p class="text-slate-400 mb-2">The most critical function of the content script is <code class="text-slate-300">getCssPath(el)</code>. Once the target element is captured, the script must calculate a unique CSS selector to track it in the future:</p>
+                            <ul class="space-y-2 ml-4 text-slate-400">
+                                <li><strong class="text-purple-300">ID Verification:</strong> If the element has an <code class="text-slate-300">id</code> attribute, the path stops there, as the ID is unique by definition.</li>
+                                <li><strong class="text-purple-300">DOM Tree Traversal:</strong> If there is no ID, the while loop goes up the DOM tree (<code class="text-slate-300">el.parentNode</code>), recording the tag names.</li>
+                                <li><strong class="text-purple-300">nth-of-type Calculation:</strong> To avoid collisions (e.g., multiple sibling <code class="text-slate-300"><div></code>s), the script iterates over the <code class="text-slate-300">previousElementSibling</code> to calculate the exact index of the element (e.g., <code class="text-slate-300">div:nth-of-type(3) > span</code>).</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-950/50 p-4 rounded-xl border border-white/5">
+                            <h3 class="text-md font-bold text-white mb-1">Injected UI</h3>
+                            <p class="text-sm text-slate-400">Instead of injecting external CSS files that could conflict with the host page's style, the "SHARD DETECTED" banner interface is generated via an HTML template literal with inline CSS styles and isolated classes, minimizing DOM pollution.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-yellow-500 shadow-[0_0_20px_#eab308]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-yellow-500/10 rounded-xl"><i data-lucide="refresh-cw" class="w-8 h-8 text-yellow-400"></i></div>
+                        <h2 class="text-2xl font-bold text-white">3. The Fetch Engine and Cache Busting (background.js)</h2>
+                    </div>
+                    <div class="text-slate-300 space-y-4">
+                        <p>When the dashboard needs to update a "Shard" (live data), it doesn't do so directly from the client (<code class="text-yellow-200 bg-yellow-900/30 px-1 rounded">dashboard.js</code>), because it would run into lethal CORS blocks. Instead, it sends an IPC message (<code class="text-slate-400">chrome.runtime.sendMessage</code>) to the Service Worker (<code class="text-yellow-200 bg-yellow-900/30 px-1 rounded">background.js</code>) with the action <code class="text-slate-400">fetchUrl</code>.</p>
+                        <p>Since Service Workers in MV3 are not subject to CORS policies (thanks to host permissions), the fetch is successful.</p>
+                        
+                        <h3 class="text-lg font-bold text-white mt-4">The Cache Problem:</h3>
+                        <p class="text-slate-400">Browsers tend to aggressively cache GET responses. To ensure that the Shard displays real-time data (e.g., a stock price per second), <code class="text-slate-300">background.js</code> performs extreme <strong>Cache Busting</strong>:</p>
+                        
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-sm overflow-x-auto">
+                            <pre><code class="text-slate-300"><span class="text-pink-400">const</span> timestamp = <span class="text-pink-400">new</span> <span class="text-yellow-200">Date</span>().<span class="text-blue-300">getTime</span>();
+                            <span class="text-pink-400">const</span> urlSeparator = request.url.<span class="text-blue-300">includes</span>(<span class="text-green-300">'?'</span>) ? <span class="text-green-300">'&'</span> : <span class="text-green-300">'?'</span>;
+                            <span class="text-pink-400">const</span> urlNoCache = request.url + urlSeparator + <span class="text-green-300">"t="</span> + timestamp;
+
+                            <span class="text-blue-300">fetch</span>(urlNoCache, {
+                                <span class="text-cyan-200">cache</span>: <span class="text-green-300">'no-store'</span>, 
+                                <span class="text-cyan-200">headers</span>: {
+                                    <span class="text-green-300">'Pragma'</span>: <span class="text-green-300">'no-cache'</span>,
+                                    <span class="text-green-300">'Cache-Control'</span>: <span class="text-green-300">'no-cache'</span>
+                                }
+                            })</code></pre>
+                        </div>
+                        <p class="text-slate-400 text-sm mt-2">By dynamically modifying the URL with a UNIX timestamp, the source server is forced to serve a fresh payload.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-red-500 shadow-[0_0_20px_#ef4444]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-red-500/10 rounded-xl"><i data-lucide="shield-off" class="w-8 h-8 text-red-400"></i></div>
+                        <h2 class="text-2xl font-bold text-white">4. HTTP Header Manipulation: The "Portals" System (rules.json)</h2>
+                    </div>
+                    <div class="text-slate-300 space-y-4">
+                        <p>Allowing a user to encapsulate entire websites (like Spotify, YouTube, or news sites) within an <code class="text-red-200 bg-red-900/30 px-1 rounded">&lt;iframe&gt;</code> in the dashboard poses a huge problem: <strong>Framebusting</strong>.</p>
+                        <p class="text-slate-400">Many servers set strict HTTP headers to prevent Clickjacking. SHARD disarms these defenses using the powerful <code class="text-slate-300">declarativeNetRequest</code> API.</p>
+                        <p>The <code class="text-red-200 bg-red-900/30 px-1 rounded">rules.json</code> file intercepts all <code class="text-slate-400">sub_frame</code> requests and applies the <code class="text-slate-400">remove</code> operation to the following headers from the server-originated response:</p>
+                        <ul class="flex flex-wrap gap-3 my-4">
+                            <li class="bg-slate-950 px-3 py-1.5 rounded-lg border border-red-500/30 text-red-300 font-mono text-sm">x-frame-options</li>
+                            <li class="bg-slate-950 px-3 py-1.5 rounded-lg border border-red-500/30 text-red-300 font-mono text-sm">content-security-policy</li>
+                            <li class="bg-slate-950 px-3 py-1.5 rounded-lg border border-red-500/30 text-red-300 font-mono text-sm">frame-options</li>
+                        </ul>
+                        <p class="text-slate-400 text-sm italic">This network-level approach (executed by Chrome's C++ engine even before the response reaches the V8 rendering engine) ensures that almost any site can be rendered in the dashboard's Portals.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-green-500 shadow-[0_0_20px_#22c55e]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-green-500/10 rounded-xl"><i data-lucide="database" class="w-8 h-8 text-green-400"></i></div>
+                        <h2 class="text-2xl font-bold text-white">5. State Management and Storage</h2>
+                    </div>
+                    <div class="text-slate-300 space-y-4">
+                        <p>No reactive framework (like React or Vue) was used. The entire "Operating System" is managed in pure Vanilla JavaScript (<code class="text-green-200 bg-green-900/30 px-1 rounded">dashboard.js</code>) to maximize performance and reduce footprint.</p>
+                        <p>The system state (X/Y coordinates of windows, URLs, saved selectors, active widgets) is persisted as an array of JSON objects in <code class="text-green-200 bg-green-900/30 px-1 rounded">chrome.storage.local</code>.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-slate-950/50 p-5 rounded-2xl border border-white/5">
+                                <h3 class="text-white font-bold mb-2 flex items-center gap-2"><i data-lucide="save" class="w-4 h-4 text-green-400"></i> Saving</h3>
+                                <p class="text-sm text-slate-400">Every time an element is moved or added, the local state is overwritten, updating the exact position.</p>
+                            </div>
+                            <div class="bg-slate-950/50 p-5 rounded-2xl border border-white/5">
+                                <h3 class="text-white font-bold mb-2 flex items-center gap-2"><i data-lucide="download-cloud" class="w-4 h-4 text-green-400"></i> Backup/Export</h3>
+                                <p class="text-sm text-slate-400">Exporting the layout simply serializes the entire content of <code class="text-slate-300">chrome.storage.local</code>, converting it into a Blob (<code class="text-slate-300">application/json</code>) that the user can download, ensuring total portability of their ecosystem.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-8 relative overflow-hidden group shadow-xl">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-pink-500 shadow-[0_0_20px_#ec4899]"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-pink-500/10 rounded-xl"><i data-lucide="music" class="w-8 h-8 text-pink-400"></i></div>
+                        <h2 class="text-2xl font-bold text-white">6. Notable Workarounds: The Spotify Hack</h2>
+                    </div>
+                    <div class="text-slate-300 space-y-4">
+                        <p>Although <code class="text-pink-200 bg-pink-900/30 px-1 rounded">rules.json</code> removes framing policies, directly embedding Spotify tends to generate authentication issues or truncated playback if the user doesn't use the official channels (the iframe provided by Spotify itself).</p>
+                        <div class="bg-pink-500/10 border border-pink-500/20 p-5 rounded-2xl mt-4">
+                            <p class="text-pink-200">To integrate Spotify natively into the widgets, <code class="text-slate-300">dashboard.js</code> leverages a known wrapping trick: it routes the widget through Google's proxy servers (<code class="text-white">googleusercontent.com/spotify.com/0</code>). This bypasses local restrictions and stabilizes the player within the isolated dashboard.</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page-view');
+
+            function switchPage(targetId) {
+                navLinks.forEach(link => {
+                    if(link.dataset.target === targetId) {
+                        link.classList.add('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/30', 'shadow-[0_0_10px_rgba(0,243,255,0.1)]');
+                        link.classList.remove('text-slate-400', 'hover:text-white', 'hover:bg-white/5', 'border-transparent');
+                    } else {
+                        link.classList.remove('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/30', 'shadow-[0_0_10px_rgba(0,243,255,0.1)]');
+                        link.classList.add('text-slate-400', 'hover:text-white', 'hover:bg-white/5', 'border-transparent');
+                    }
+                });
+// But is there really anyone who's read all the way up to this point? If you've read this sentence, you're one of them. :)
+                pages.forEach(page => {
+                    if(page.id === targetId) {
+                        page.classList.remove('page-hidden');
+                        setTimeout(() => {
+                            page.classList.add('page-active');
+                        }, 10);
+                    } else {
+                        page.classList.remove('page-active');
+                        setTimeout(() => {
+                            if(!page.classList.contains('page-active')) {
+                                page.classList.add('page-hidden');
+                            }
+                        }, 400); 
+                    }
+                });
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchPage(link.dataset.target);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
